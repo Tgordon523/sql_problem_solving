@@ -1,4 +1,5 @@
 import duckdb
+import pandas as pd
 
 sql_init = """
 CREATE TYPE state AS ENUM ('approved', 'declined');
@@ -18,3 +19,11 @@ duckdb.sql("""SELECT CONCAT(YEAR(trans_date), '-', MONTH(trans_date)) monthly, c
            GROUP BY 
            CONCAT(YEAR(trans_date), '-', MONTH(trans_date)), country
              """).show()
+
+results = duckdb.sql("""SELECT CONCAT(YEAR(trans_date), '-', MONTH(trans_date)) monthly, country, COUNT(*) trans_cnt, SUM(CASE WHEN T.state = 'approved' THEN 1 ELSE 0 END) approved_cnt, SUM(T.amount) total,
+           SUM(CASE WHEN T.state = 'approved' THEN T.amount ELSE 0 END) approved_total
+           FROM Transactions T
+           GROUP BY 
+           CONCAT(YEAR(trans_date), '-', MONTH(trans_date)), country
+             """).to_df()
+print(results)
