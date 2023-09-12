@@ -27,17 +27,4 @@ duckdb.sql("""
            SELECT SUM(logic)/ COUNT(*) immediate_rate_first_order
            FROM first_date
            WHERE rank=1 
-           
-
-
-           --SELECT A.*
-           --FROM (
-           --SELECT  
-           --CASE WHEN D.order_date = D.customer_pref_delivery_date THEN 1 ELSE 0 END log,
-           --ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date ASC) rank, 
-           --*
-           --FROM Delivery D
-           --) A 
-           --WHERE A.rank = 1
-          --ORDER BY A.delivery_id
              """).show()
