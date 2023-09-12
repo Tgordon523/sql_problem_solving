@@ -19,8 +19,6 @@ insert into Confirmations values (2, '2021-01-22 00:00:00', 'confirmed');
 insert into Confirmations values (2, '2021-02-28 23:59:59', 'timeout');
 """
 
-# print(duckdb.sql('SELECT 42').show())
-
 r1 = duckdb.sql(sql_init)
 
 duckdb.sql("""SELECT S.user_id, COALESCE(c_rate.confirmation_rate, 0.0) confirmation_rates
@@ -31,7 +29,4 @@ duckdb.sql("""SELECT S.user_id, COALESCE(c_rate.confirmation_rate, 0.0) confirma
            FROM Confirmations C
            GROUP BY C.user_id
            ) c_rate ON S.user_id = c_rate.user_id
-
-             """).show()
-# result = duckdb.sql('SELECT tweet_id FROM Tweets WHERE LEN(content) < 15').fetchall()
-# print(result)
+            """).show()

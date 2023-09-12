@@ -11,8 +11,6 @@ insert into Employee (id, name, department, managerId) values (105, 'Anne', 'A',
 insert into Employee (id, name, department, managerId) values (106, 'Ron', 'B', 101);
 """
 
-# print(duckdb.sql('SELECT 42').show())
-
 r1 = duckdb.sql(sql_init)
 
 duckdb.sql("""SELECT E.name
@@ -24,5 +22,3 @@ duckdb.sql("""SELECT E.name
            HAVING COUNT(*) >= 5
            ) reports ON E.id=reports.managerId
              """).show()
-# result = duckdb.sql('SELECT tweet_id FROM Tweets WHERE LEN(content) < 15').fetchall()
-# print(result)
