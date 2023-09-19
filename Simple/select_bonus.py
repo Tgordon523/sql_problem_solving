@@ -1,5 +1,11 @@
 import duckdb
 
+"""
+Problem:
+
+Find all employees with no bonus or bonus under 1k
+"""
+
 sql_init = """
 Create table If Not Exists Employee (empId int, name varchar, supervisor int, salary int); 
 Create table If Not Exists Bonus (empId int, bonus int);
