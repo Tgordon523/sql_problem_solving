@@ -1,5 +1,11 @@
 import duckdb
 
+"""
+Problem:
+
+Return managers with 5 or more direct reports
+"""
+
 sql_init = """
 Create table If Not Exists Employee (id int, name varchar, department varchar, managerId int);
 Truncate table Employee;
