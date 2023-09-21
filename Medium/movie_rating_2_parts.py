@@ -42,10 +42,11 @@ duckdb.sql("""
            GROUP BY movie_id
            )
            
-           SELECT M.title, MAX(R.avg)
+           SELECT M.title, R.avg
            FROM rating R
            JOIN Movies M ON R.movie_id = M.movie_id
-           GROUP BY M.title
+           ORDER BY avg DESC, M.title
+           LIMIT 1
            """).show()
 
 duckdb.sql("""
