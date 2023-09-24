@@ -20,8 +20,24 @@ insert into RequestAccepted (requester_id, accepter_id, accept_date) values ('3'
 r1 = duckdb.sql(sql_init)
 
 duckdb.sql("""
-           SELECT
-           *
-           FROM RequestedAccepted
+           WITH userids AS (
+           SELECT requester_id as ids FROM RequestAccepted
+
+           UNION ALL
+
+           SELECT accepter_id as ids FROM RequestAccepted
+           ),
+           totals AS 
+           (
+           SELECT ids, COUNT(*) cnt  
+           FROM userids
+           GROUP BY ids
+           )
+
+
+
+           SELECT ids, cnt
+           FROM totals U
+           WHERE U.cnt = (SELECT MAX(cnt) FROM totals)
 
             """).show()
