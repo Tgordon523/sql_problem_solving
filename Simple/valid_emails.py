@@ -26,6 +26,11 @@ insert into Users (user_id, name, mail) values ('7', 'Shapiro', '.shapo@leetcode
 r1 = duckdb.sql(sql_init)
 
 duckdb.sql("""
-    SELECT *
-    FROM Users
+    SELECT 
+        *
+    FROM 
+        Users
+    WHERE 
+        RIGHT(Users.mail, 13) = '@leetcode.com'
+        AND LEFT(mail,1) SIMILAR TO '[a-zA-Z]'
 """).show()
