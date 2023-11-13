@@ -35,5 +35,17 @@ insert into Examinations (student_id, subject_name) values ('1', 'Math');
 
 r1 = duckdb.sql(sql_init)
 
-duckdb.sql("""SELECT * 
-           FROM Examinations """).show()
+duckdb.sql("""
+           WITH exams AS (
+           SELECT student_id, subject_name, COUNT(*) attended_exams
+           FROM Examinations 
+           GROUP BY student_id, subject_name
+           ) 
+
+           SELECT st.*, s.subject_name, COALESCE(attended_exams, 0) attended_exams
+           FROM Students st
+           CROSS JOIN Subjects s
+           LEFT JOIN exams e ON st.student_id=e.student_id
+           AND s.subject_name=e.subject_name
+           ORDER BY 1
+           """).show()
